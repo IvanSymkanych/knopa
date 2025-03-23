@@ -12,6 +12,6 @@ namespace Config
         [Tooltip("Earth Units")] public float MinMass;
         [Tooltip("Earth Units")] public float MaxMass;
         [Tooltip("Earth Units")] public float MinRadius;
-        [Tooltip("Earth Units")]  public float MaxRadius;
+        [Tooltip("Earth Units")] public float MaxRadius;
     }
 }

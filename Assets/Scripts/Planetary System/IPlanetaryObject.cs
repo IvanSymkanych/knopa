@@ -6,6 +6,6 @@ namespace Planetary_System
     {
         PlanetModel PlanetModel { get; }
         Transform Transform { get; }
-        void Dispose();
+        void Move();
     }
 }

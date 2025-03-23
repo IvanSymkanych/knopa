@@ -15,8 +15,8 @@ namespace Planetary_System
         private readonly GameConfig _gameConfig;
         
         private Transform _parent;
-        private bool _autoMove;
-
+        private bool _canMove;
+        
         public PlanetarySystem(IPlanetaryFactory planetaryFactory, GameConfig gameConfig)
         {
             _planetaryFactory = planetaryFactory;
@@ -30,19 +30,16 @@ namespace Planetary_System
             CreateParent();
             CreatePlanets();
         }
-
-        public void GeneratePlanets()
-        {
-            foreach (var planet in PlanetaryObjects)
-            {
-                planet.Dispose();
-            }
-            
-            CreatePlanets();
-        }
         
         public void Tick()
         {
+            if(!_canMove)
+                return;
+            
+            foreach (var planet in PlanetaryObjects)
+            {
+                planet.Move();
+            }
         }
         
         private void CreateParent()
@@ -53,38 +50,26 @@ namespace Planetary_System
         
         private void CreatePlanets()
         {
-            const float offsetBetweenPlanets = 2f;
-            var currentX = 0f;
-            var previousRadius =0f;
-
-            foreach (var type in Enum.GetValues(typeof(PlanetType)).Cast<PlanetType>().OrderBy(_ => UnityEngine.Random.value))
+            var index = 1;
+            _canMove = false;
+            
+            foreach (PlanetType type in Enum.GetValues(typeof(PlanetType)))
             {
                 var config = _gameConfig.PlanetConfigs.FirstOrDefault(c => c.PlanetType == type);
-
+                
                 if (config == null)
                 {
-                    Debug.LogError($"[Planetary System] Planet type {type} is not configured.");
+                    Debug.LogError($"[Planetary System] Planet type {type} is not configured]");
                     continue;
                 }
-
-        
-                currentX += previousRadius + offsetBetweenPlanets;
                 
-                
-                var position = new Vector3(currentX, 0, 0);
+                var position = new Vector3(index * PlanetConstants.OffsetBetweenPlanet, 0, 0);
                 var planet = _planetaryFactory.CreateRandomizePlanetaryObject(_parent, position, config);
                 PlanetaryObjects.Add(planet);
-                
-                float currentRadius = planet.Transform.localScale.x / 2f;
-
-                // Оновлюємо currentX для наступної планети (враховуємо свій радіус)
-                currentX += currentRadius;
-
-                // Запам'ятовуємо радіус для наступного кроку
-                previousRadius = currentRadius;
+                index++;
             }
+            
+            _canMove = true;
         }
-
-
     }
 }

@@ -9,10 +9,7 @@ namespace Planetary_System
         {
             var randomMass = Random.Range(planetConfig.MinMass, planetConfig.MaxMass);
             var randomRadius = Random.Range(planetConfig.MinRadius, planetConfig.MaxRadius);
-            double mass = randomMass * PlanetConstants.EarthMassKg;
-            double radius= randomRadius * PlanetConstants.EarthRadiusMeters;
-            
-            var model = new PlanetModel(planetConfig.PlanetType, mass, radius);
+            var model = new PlanetModel(planetConfig.PlanetType, randomMass, randomRadius);
             
             var instance = Object.Instantiate(planetConfig.PlanetaryObjectPrefab, position, Quaternion.identity, parent);
             instance.Initialize(model);

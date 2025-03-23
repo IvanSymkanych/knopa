@@ -38,7 +38,7 @@ MonoBehaviour:
     MinRadius: 0.8
     MaxRadius: 1.9
   - PlanetType: 4
-    PlanetaryObjectPrefab: {fileID: 1806320176183750340, guid: 9c543eba93f51e6459cc5c4489dd2289, type: 3}
+    PlanetaryObjectPrefab: {fileID: 1806320176183750340, guid: b10dcaf2ab5f8b74c957ddc96d002d9c, type: 3}
     MinMass: 2
     MaxMass: 10
     MinRadius: 1.3
